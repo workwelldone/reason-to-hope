@@ -1,18 +1,14 @@
+import java.util.Arrays;
+import java.util.Set;
+import java.util.HashSet;
+
 class Pangrams {
 
 	static boolean isPangram(String sentence){
 
-		boolean[] letters = new boolean[26];
+		String[] temp = sentence.toUpperCase().replaceAll("[^A-Z]","").split("");
+		Set<String> letters = new HashSet<>(Arrays.asList(temp));
 
-		char[] temp = sentence.toUpperCase().replaceAll("[^A-Z]","").toCharArray();
-		for (char c: temp) {
-			letters[c - 'A'] = true;
-		}
-
-		for (boolean b: letters) {
-			if (!b) return false;
-		}
-
-		return true;
+		return (letters.size() == 26);
 	}
 }
