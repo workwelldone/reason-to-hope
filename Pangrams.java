@@ -1,6 +1,3 @@
-import java.util.List;
-import java.util.Arrays;
-
 class Pangrams {
 
 	static boolean isPangram(String sentence){
