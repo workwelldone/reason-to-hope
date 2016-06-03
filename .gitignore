@@ -1,0 +1,11 @@
+# Ignore everything
+*
+
+# Except these files
+!.gitignore
+!*.java
+!*.md
+!*.html
+!*.css
+
+!*/
