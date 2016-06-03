@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 public class DNA {
 
-	String strand;
+	private String strand;
 	private static final List<Character> nucleotides = Arrays.asList('A', 'C', 'G', 'T');
 
 	public DNA(String strand) {
