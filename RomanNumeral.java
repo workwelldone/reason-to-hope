@@ -2,10 +2,7 @@ import java.util.TreeMap;
 
 class RomanNumeral {
 
-/** I found the general idea from
-* http://stackoverflow.com/questions/12967896/converting-integers-to-roman-numerals-java
-* However I did work it through on my own.  I think it is awesome.
-**/
+/** The general idea from http://stackoverflow.com/questions/12967896/converting-integers-to-roman-numerals-java **/
 
 	private static TreeMap<Integer, String> map = new TreeMap<>();
 	
