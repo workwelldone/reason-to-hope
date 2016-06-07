@@ -1,14 +1,9 @@
 class Trinary {
 
 	public static int toDecimal(String input) {
-		if (!input.equals(input.replaceAll("[^0-2]", ""))) return 0;
-		
-		int length = input.length();
-		int pow = length - 1;
-		int sum = 0;
-		for (int i = 0; i < length; i++) {
-			sum += Character.getNumericValue(input.charAt(i)) * Math.pow(3, pow--);
-		}
-		return sum;
+		if (!input.matches("[0-2]+")) return 0;
+		return input.chars()
+					.map(c -> (char)c - '0')
+					.reduce(0, (result, c) -> result * 3 + c);
 	}
 }
