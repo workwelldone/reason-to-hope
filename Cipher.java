@@ -4,7 +4,6 @@ public class Cipher {
 
 	private String key;
 	private String message;
-	private static final int SIMPLE_SHIFT = 3;
 	private static final int AUTO_GENERATE_KEY_LENGTH = 100;
 	
 	public Cipher() {
@@ -17,53 +16,12 @@ public class Cipher {
 		this.key = key;
 		message = "";
 	}
-	/**
-	 * Do simple shift encoding of lower case letters only
-	 * @param input message to process
-	 * @param encode true to encode, false to decode
-	 * @return encoded/decoded String
-	 */
-	private String simpleShift(boolean encode) {
-		String result = "";
-		for(int i = 0; i < message.length(); i++){
-			result += charShift(message.charAt(i), (encode ? SIMPLE_SHIFT : -SIMPLE_SHIFT));
-		}
-		return result;
-	}
 	
 	private void validate(String input) throws IllegalArgumentException {
-		if (!input.equals(input.replaceAll("[^a-z]", "")) || input.isEmpty())
+		if (!input.matches("[a-z]+"))
 			throw new IllegalArgumentException();
 	}
 	
-	/**
-	 * Implements a simple Caesar cipher
-	 * @param input lower case text to encode
-	 * @return encoded text
-	 */
-	public String encodeSimpleShift(String input) {
-		validate(input);
-		message = input;
-		return simpleShift(true);
-	}
-	
-	/**
-	 * Decodes a simple Caesar cipher
-	 * @param input lower case Caesar cipher
-	 * @return original decoded text
-	 */
-	public String decodeSimpleShift(String input) {
-		validate(input);
-		message = input;
-		return simpleShift(false);
-	}
-	
-	/**
-	 * Performs single character shift, wrapping z-a/a-z as necessary.
-	 * @param letter lower case letter
-	 * @param shift steps to move, positive or negative
-	 * @return shifted lower case letter
-	 */
 	private char charShift(char letter, int shift) {
 		if (shift == 0) return letter;
 		if (shift > 0) {
@@ -72,18 +30,13 @@ public class Cipher {
 			else return (char)(letter + shift);
 		}
 		
-		// shift < 0
+		// shift to left
 		int toA = letter - 'a';
 		shift *= -1;
 		if (toA < shift) return (char)('z' + 1 - shift + toA);
 		else return (char)(letter - shift);
 	}
 	
-	/**
-	 * Performs substitution encoding/decoding based on key provided at instantiation.
-	 * @param encode true to encode, false to decode
-	 * @return encoded/decoded message
-	 */
 	private String substitutionShift(boolean encode) {
 		String result = "";
 		int keyPointer = 0;
@@ -95,22 +48,12 @@ public class Cipher {
 		return result;
 	}
 	
-	/**
-	 * Performs substitution encoding based on object map
-	 * @param input lower case characters only
-	 * @return encoded characters
-	 */
 	public String encode(String input) {
 		validate(input);
 		message = input;
 		return substitutionShift(true);
 	}
 	
-	/**
-	 * Performs substitution decoding based on object map
-	 * @param input encoded lower case characters
-	 * @return decoded characters
-	 */
 	public String decode(String input) {
 		validate(input);
 		message = input;
@@ -128,5 +71,4 @@ public class Cipher {
 			key += (char)('a' + random.nextInt(26));
 		}
 	}
-	
 }
