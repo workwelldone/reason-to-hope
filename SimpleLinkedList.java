@@ -2,11 +2,11 @@ import java.util.NoSuchElementException;
 
 public class SimpleLinkedList <E> {
 
-	private class Element<T> {
+	private class Node<T> {
 		private T element;
-		private Element<T> next;
+		private Node<T> next;
 		
-		public Element(T element) {
+		public Node(T element) {
 			this.element = element;
 		}
 		
@@ -18,17 +18,17 @@ public class SimpleLinkedList <E> {
 			this.element = element;
 		}
 		
-		public Element<T> getPointer() {
+		public Node<T> getPointer() {
 			return next;
 		}
 		
-		public void setPointer(Element<T> pointer) {
+		public void setPointer(Node<T> pointer) {
 			this.next = pointer;
 		}
 	}
 
 	private int size;
-	private Element<E> last;
+	private Node<E> last;
 	
 	public SimpleLinkedList() {
 		size = 0;
@@ -50,9 +50,9 @@ public class SimpleLinkedList <E> {
 	public boolean push(E element) {
 		if (element == null) return false;
 		
-		if (last == null) last = new Element<E>(element); // add first element to list
+		if (last == null) last = new Node<E>(element); // add first element to list
 		else {
-			Element<E> temp = new Element<E>(element);
+			Node<E> temp = new Node<E>(element);
 			temp.setPointer(last);
 			last = temp;
 		}
@@ -63,7 +63,7 @@ public class SimpleLinkedList <E> {
 	public int size() {
 		return size;
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public void reverse() {
 		int originalSize = size;
@@ -71,11 +71,11 @@ public class SimpleLinkedList <E> {
 		for (int i = 0; i < originalSize; i++) temp[i] = pop();
 		for (int i = 0; i < originalSize; i++) push((E)temp[i]);
 	}
-
+	
 	@SuppressWarnings("unchecked")
 	public E[] asArray(Class<?> c){
 		Object[] temp = new Object[size];
-		Element<E> next = last;
+		Node<E> next = last;
 		for (int i = 0; i < size; i++) {
 			temp[i] = next.getElement();
 			next = next.getPointer();
