@@ -2,33 +2,8 @@ import java.util.NoSuchElementException;
 
 public class SimpleLinkedList <E> {
 
-	private class Node<T> {
-		private T element;
-		private Node<T> next;
-		
-		public Node(T element) {
-			this.element = element;
-		}
-		
-		public T getElement() {
-			return element;
-		}
-		
-		public void setElement(T element) {
-			this.element = element;
-		}
-		
-		public Node<T> getPointer() {
-			return next;
-		}
-		
-		public void setPointer(Node<T> pointer) {
-			this.next = pointer;
-		}
-	}
-
 	private int size;
-	private Node<E> last;
+	private Node<E> top;
 	
 	public SimpleLinkedList() {
 		size = 0;
@@ -41,8 +16,8 @@ public class SimpleLinkedList <E> {
 	
 	public E pop() throws NoSuchElementException {
 		if (size == 0) throw new NoSuchElementException();
-		E temp = last.getElement();
-		last = last.getPointer();
+		E temp = top.element;
+		top = top.nextDown;
 		size--;
 		return temp;
 	}
@@ -50,11 +25,11 @@ public class SimpleLinkedList <E> {
 	public boolean push(E element) {
 		if (element == null) return false;
 		
-		if (last == null) last = new Node<E>(element); // add first element to list
+		if (top == null) top = new Node<E>(element);
 		else {
 			Node<E> temp = new Node<E>(element);
-			temp.setPointer(last);
-			last = temp;
+			temp.nextDown = top;
+			top = temp;
 		}
 		size++;
 		return true;
@@ -75,11 +50,20 @@ public class SimpleLinkedList <E> {
 	@SuppressWarnings("unchecked")
 	public E[] asArray(Class<?> c){
 		Object[] temp = new Object[size];
-		Node<E> next = last;
+		Node<E> next = top;
 		for (int i = 0; i < size; i++) {
-			temp[i] = next.getElement();
-			next = next.getPointer();
+			temp[i] = next.element;
+			next = next.nextDown;
 		}
 		return (E[])(temp);
+	}
+	
+	private class Node<T> {
+		private final T element;
+		private Node<T> nextDown;
+		
+		public Node(T element) {
+			this.element = element;
+		}
 	}
 }
